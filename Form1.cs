@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,10 +13,10 @@ namespace Игра_в_15
 {
     public partial class MainForm : Form
     {
-        Random random = new Random();
+        readonly Random random = new Random();
 
-        const int NUMBEROFBLOCKS = 16;
         const int NUMBEROFBLOCKSINLINE = 4;
+        const int NUMBEROFBLOCKS = NUMBEROFBLOCKSINLINE * NUMBEROFBLOCKSINLINE;
 
         int[,] tabelGame = new int[NUMBEROFBLOCKSINLINE, NUMBEROFBLOCKSINLINE];
         public MainForm()
@@ -23,7 +24,6 @@ namespace Игра_в_15
             InitializeComponent();
             GenerateTabel();
             ImageTabel();
-            //MessageBox.Show(picture1.Tag.ToString());
         }
 
         private void GenerateTabel()
@@ -42,7 +42,7 @@ namespace Игра_в_15
                         numbers.RemoveAt(index);
                     }
                 }
-            } while (CheckState(tabelGame));
+            } while (!CheckState(tabelGame));
         }
         private bool CheckState(int[,] tabel)
         {
@@ -60,10 +60,15 @@ namespace Игра_в_15
             {
                 if (a[i] == 16)
                     e = (i / NUMBEROFBLOCKSINLINE) + 1;
-                for (int j = i + 1; j < a.Count(); j++)
+                //else if (i == 0)
+                //    continue;
+                else
                 {
-                    if (a[j] < a[i])
-                        n++;
+                    for (int j = i + 1; j < a.Count(); j++)
+                    {
+                        if (a[j] < a[i] )//|| a[j] == 16)
+                            n++;
+                    }
                 }
             }
             return (n + e) % 2 == 0;
@@ -71,15 +76,17 @@ namespace Игра_в_15
         private void ImageTabel()
         {
             int count = 1;
+            List<Image> image = new List<Image>();
+            for (int i = 1; i <= NUMBEROFBLOCKS; i++)
+            {
+                image.Add(((PictureBox)Controls.Find("picture" + i, true)[0]).Image);
+            }
             for (int i = 0; i < NUMBEROFBLOCKSINLINE; i++)
             {
                 for (int j = 0; j < NUMBEROFBLOCKSINLINE; j++)
                 {
-                    Image temp = ((PictureBox)Controls.Find("picture" + count, true)[0]).Image;
-                    //((PictureBox)(Controls.Find("picture" + count++, true)[0]))
-                    ((PictureBox)Controls.Find("picture" + count++, true)[0]).Image = ((PictureBox)(Controls.Find("picture" + tabelGame[i, j], true)[0])).Image;
-                    //((PictureBox)Controls.Find("picture" + count, true)[0]).Tag = "" + i + j;
-                    ((PictureBox)Controls.Find("picture" + tabelGame[i, j], true)[0]).Image = temp;
+                    //Image temp = ((PictureBox)Controls.Find("picture" + count, true)[0]).Image;
+                    ((PictureBox)Controls.Find("picture" + count++, true)[0]).Image = image[tabelGame[i, j] - 1];
                 }
             }
         }
@@ -95,28 +102,50 @@ namespace Игра_в_15
                     Image temp = start.Image;
                     start.Image = null;
                     ((PictureBox)Controls.Find("picture" + i, true)[0]).Image = temp;
+                    MoveBlockInTabel(i, count);
                     i = NUMBEROFBLOCKS;
                 }
             }
-            //if (picture5.Image == null)
-            //{
-            //    Image temp = start.Image;
-            //    start.Image = picture5.Image;
-            //    picture5.Image = temp;
-            //}
-            //else if (picture2.Image == null)
-            //{
-            //    Image temp = start.Image;
-            //    picture1.Image = picture2.Image;
-            //    start.Image = temp;
-            //}
+            if (IsGameOver())
+            {
+                if (MessageBox.Show("Поздравляю, вы выйграли. Хотите продолжить?", "Поздравляю", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    GenerateTabel();
+                    ImageTabel();
+                }
+                else
+                {
+                    Close();
+                }
+            }
         }
-        //private void Check
-        private bool CheckVoidPlace(int i, int tag)
+
+        private bool IsGameOver()
         {
-            if (tag - NUMBEROFBLOCKSINLINE == i || tag + NUMBEROFBLOCKSINLINE == i || (tag + 1 == i && tag % NUMBEROFBLOCKSINLINE != 0) || (tag - 1 == i && tag % NUMBEROFBLOCKSINLINE != 1))
+            int count = 1;
+            for (int i = 0; i < NUMBEROFBLOCKSINLINE; i++)
+                for (int j = 0; j < NUMBEROFBLOCKSINLINE; j++)
+                    if (tabelGame[i, j] != count++)
+                        return false;
+
+            return true;
+        }
+
+        private bool CheckVoidPlace(int indexNull, int tag)
+        {
+            if (tag - NUMBEROFBLOCKSINLINE == indexNull || tag + NUMBEROFBLOCKSINLINE == indexNull || (tag + 1 == indexNull && tag % NUMBEROFBLOCKSINLINE != 0) || (tag - 1 == indexNull && tag % NUMBEROFBLOCKSINLINE != 1))
                 return true;
             return false;
+        }
+        private void MoveBlockInTabel(int indexNull, int tag)
+        {
+            int indexForNull1 = indexNull % NUMBEROFBLOCKSINLINE == 0 ? (indexNull / NUMBEROFBLOCKSINLINE) - 1 : indexNull / NUMBEROFBLOCKSINLINE;
+            int indexForNull2 = indexNull % NUMBEROFBLOCKSINLINE == 0 ? NUMBEROFBLOCKSINLINE - 1 : indexNull % NUMBEROFBLOCKSINLINE - 1;
+            int indexForTag1 = tag % NUMBEROFBLOCKSINLINE == 0 ? (tag / NUMBEROFBLOCKSINLINE) - 1 : tag / NUMBEROFBLOCKSINLINE;
+            int indexForTag2 = tag % NUMBEROFBLOCKSINLINE == 0 ? NUMBEROFBLOCKSINLINE - 1 : tag % NUMBEROFBLOCKSINLINE - 1;
+            int temp = tabelGame[indexForNull1, indexForNull2];
+            tabelGame[indexForNull1, indexForNull2] = tabelGame[indexForTag1, indexForTag2];
+            tabelGame[indexForTag1, indexForTag2] = temp;
         }
     }
 }
