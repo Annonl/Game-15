@@ -1,0 +1,6 @@
+Time - 41055, Count - 55, Len(cost) - 4702954, Memory(MB) - 834
+Time - 2278, Count - 62, Len(cost) - 262623, Memory(MB) - 45
+Time - 23609, Count - 59, Len(cost) - 2623926, Memory(MB) - 461
+Time - 9903, Count - 57, Len(cost) - 1200677, Memory(MB) - 207
+Time - 676, Count - 52, Len(cost) - 82546, Memory(MB) - 15
+57 15504

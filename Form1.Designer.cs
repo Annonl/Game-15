@@ -91,7 +91,7 @@
             this.tableLayoutPanel.Controls.Add(this.picture1, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.picture16, 3, 3);
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 4;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -105,7 +105,7 @@
             // 
             this.picture15.Image = ((System.Drawing.Image)(resources.GetObject("picture15.Image")));
             this.picture15.Location = new System.Drawing.Point(282, 397);
-            this.picture15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture15.Margin = new System.Windows.Forms.Padding(4);
             this.picture15.Name = "picture15";
             this.picture15.Size = new System.Drawing.Size(131, 123);
             this.picture15.TabIndex = 14;
@@ -117,7 +117,7 @@
             // 
             this.picture14.Image = ((System.Drawing.Image)(resources.GetObject("picture14.Image")));
             this.picture14.Location = new System.Drawing.Point(143, 397);
-            this.picture14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture14.Margin = new System.Windows.Forms.Padding(4);
             this.picture14.Name = "picture14";
             this.picture14.Size = new System.Drawing.Size(131, 123);
             this.picture14.TabIndex = 13;
@@ -129,7 +129,7 @@
             // 
             this.picture13.Image = ((System.Drawing.Image)(resources.GetObject("picture13.Image")));
             this.picture13.Location = new System.Drawing.Point(4, 397);
-            this.picture13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture13.Margin = new System.Windows.Forms.Padding(4);
             this.picture13.Name = "picture13";
             this.picture13.Size = new System.Drawing.Size(131, 123);
             this.picture13.TabIndex = 12;
@@ -141,7 +141,7 @@
             // 
             this.picture12.Image = ((System.Drawing.Image)(resources.GetObject("picture12.Image")));
             this.picture12.Location = new System.Drawing.Point(421, 266);
-            this.picture12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture12.Margin = new System.Windows.Forms.Padding(4);
             this.picture12.Name = "picture12";
             this.picture12.Size = new System.Drawing.Size(131, 123);
             this.picture12.TabIndex = 11;
@@ -153,7 +153,7 @@
             // 
             this.picture11.Image = ((System.Drawing.Image)(resources.GetObject("picture11.Image")));
             this.picture11.Location = new System.Drawing.Point(282, 266);
-            this.picture11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture11.Margin = new System.Windows.Forms.Padding(4);
             this.picture11.Name = "picture11";
             this.picture11.Size = new System.Drawing.Size(131, 123);
             this.picture11.TabIndex = 10;
@@ -165,7 +165,7 @@
             // 
             this.picture10.Image = ((System.Drawing.Image)(resources.GetObject("picture10.Image")));
             this.picture10.Location = new System.Drawing.Point(143, 266);
-            this.picture10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture10.Margin = new System.Windows.Forms.Padding(4);
             this.picture10.Name = "picture10";
             this.picture10.Size = new System.Drawing.Size(131, 123);
             this.picture10.TabIndex = 9;
@@ -177,7 +177,7 @@
             // 
             this.picture9.Image = ((System.Drawing.Image)(resources.GetObject("picture9.Image")));
             this.picture9.Location = new System.Drawing.Point(4, 266);
-            this.picture9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture9.Margin = new System.Windows.Forms.Padding(4);
             this.picture9.Name = "picture9";
             this.picture9.Size = new System.Drawing.Size(131, 123);
             this.picture9.TabIndex = 8;
@@ -189,7 +189,7 @@
             // 
             this.picture8.Image = ((System.Drawing.Image)(resources.GetObject("picture8.Image")));
             this.picture8.Location = new System.Drawing.Point(421, 135);
-            this.picture8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture8.Margin = new System.Windows.Forms.Padding(4);
             this.picture8.Name = "picture8";
             this.picture8.Size = new System.Drawing.Size(131, 123);
             this.picture8.TabIndex = 7;
@@ -201,7 +201,7 @@
             // 
             this.picture7.Image = ((System.Drawing.Image)(resources.GetObject("picture7.Image")));
             this.picture7.Location = new System.Drawing.Point(282, 135);
-            this.picture7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture7.Margin = new System.Windows.Forms.Padding(4);
             this.picture7.Name = "picture7";
             this.picture7.Size = new System.Drawing.Size(131, 123);
             this.picture7.TabIndex = 6;
@@ -213,7 +213,7 @@
             // 
             this.picture6.Image = ((System.Drawing.Image)(resources.GetObject("picture6.Image")));
             this.picture6.Location = new System.Drawing.Point(143, 135);
-            this.picture6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture6.Margin = new System.Windows.Forms.Padding(4);
             this.picture6.Name = "picture6";
             this.picture6.Size = new System.Drawing.Size(131, 123);
             this.picture6.TabIndex = 5;
@@ -225,7 +225,7 @@
             // 
             this.picture5.Image = ((System.Drawing.Image)(resources.GetObject("picture5.Image")));
             this.picture5.Location = new System.Drawing.Point(4, 135);
-            this.picture5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture5.Margin = new System.Windows.Forms.Padding(4);
             this.picture5.Name = "picture5";
             this.picture5.Size = new System.Drawing.Size(131, 123);
             this.picture5.TabIndex = 4;
@@ -237,7 +237,7 @@
             // 
             this.picture4.Image = ((System.Drawing.Image)(resources.GetObject("picture4.Image")));
             this.picture4.Location = new System.Drawing.Point(421, 4);
-            this.picture4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture4.Margin = new System.Windows.Forms.Padding(4);
             this.picture4.Name = "picture4";
             this.picture4.Size = new System.Drawing.Size(131, 123);
             this.picture4.TabIndex = 3;
@@ -249,7 +249,7 @@
             // 
             this.picture3.Image = ((System.Drawing.Image)(resources.GetObject("picture3.Image")));
             this.picture3.Location = new System.Drawing.Point(282, 4);
-            this.picture3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture3.Margin = new System.Windows.Forms.Padding(4);
             this.picture3.Name = "picture3";
             this.picture3.Size = new System.Drawing.Size(131, 123);
             this.picture3.TabIndex = 2;
@@ -261,7 +261,7 @@
             // 
             this.picture2.Image = ((System.Drawing.Image)(resources.GetObject("picture2.Image")));
             this.picture2.Location = new System.Drawing.Point(143, 4);
-            this.picture2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture2.Margin = new System.Windows.Forms.Padding(4);
             this.picture2.Name = "picture2";
             this.picture2.Size = new System.Drawing.Size(131, 123);
             this.picture2.TabIndex = 1;
@@ -273,7 +273,7 @@
             // 
             this.picture1.Image = ((System.Drawing.Image)(resources.GetObject("picture1.Image")));
             this.picture1.Location = new System.Drawing.Point(4, 4);
-            this.picture1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture1.Margin = new System.Windows.Forms.Padding(4);
             this.picture1.Name = "picture1";
             this.picture1.Size = new System.Drawing.Size(131, 123);
             this.picture1.TabIndex = 0;
@@ -284,7 +284,7 @@
             // picture16
             // 
             this.picture16.Location = new System.Drawing.Point(421, 397);
-            this.picture16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picture16.Margin = new System.Windows.Forms.Padding(4);
             this.picture16.Name = "picture16";
             this.picture16.Size = new System.Drawing.Size(131, 123);
             this.picture16.TabIndex = 15;
@@ -294,8 +294,7 @@
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 300;
+            this.timer1.Interval = 400;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainForm
@@ -307,6 +306,7 @@
             this.Controls.Add(this.tableLayoutPanel);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Игра 15";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.tableLayoutPanel.ResumeLayout(false);

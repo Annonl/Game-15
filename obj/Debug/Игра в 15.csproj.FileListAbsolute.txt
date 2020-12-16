@@ -1,4 +1,3 @@
-D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.csprojAssemblyReference.cache
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра_в_15.Properties.Resources.resources
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.csproj.GenerateResource.cache
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.csproj.CoreCompileInputs.cache
@@ -8,3 +7,4 @@ D:\Университет\3 сесместр\Курсовая\Игра в 15\bin
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра_в_15.MainForm.resources
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.exe
 D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.pdb
+D:\Университет\3 сесместр\Курсовая\Игра в 15\obj\Debug\Игра в 15.csprojAssemblyReference.cache

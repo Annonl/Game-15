@@ -1,27 +1,28 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Игра_в_15
 {
     public class Algoritm
     {
-        struct Tree
+        struct GamePosition
         {
             public List<int> tabel;
-            public List<Tree> parent;
+            public List<GamePosition> parent;
             public int index;
-            //public int countResh;
+            public GamePosition(List<int> t, List<GamePosition> p, int i)
+            {
+                tabel = t;
+                parent = p;
+                index = i;
+            }
         }
 
         static int numberOfBlocks = MainForm.NUMBEROFBLOCKS;
-        int numberOfBlockInLine = MainForm.NUMBEROFBLOCKSINLINE;
-        List<Tree> allResul = new List<Tree>();
-        Tree element;
+        static int numberOfBlockInLine = MainForm.NUMBEROFBLOCKSINLINE;
+        List<GamePosition> allResul = new List<GamePosition>();
+        GamePosition element;
         int indexNull;
         int indexBlock; // номер блока, который мы будем передвигать
         int[] tabeGame = new int[numberOfBlocks];
@@ -29,71 +30,12 @@ namespace Игра_в_15
         int count = 0;
         static public List<int> TabelGame { get; set; }
 
-        //public void GenerateTree()
-        //{
-        //    List<Tree> allResul = new List<Tree>();
-        //    Tree root;
-        //    root.parent = null;
-        //    root.index = -1;
-        //    root.tabel = TabelGame;
-        //    root.countResh = 0;
-        //    allResul.Add(root);
-        //    int indexNull;
-        //    int indexBlock; // номер блока, который мы будем передвигать
-        //    Tree element;
-        //    for (int i = 0; !IsGameOver(allResul[i].tabel); i++)
-        //    {
-        //        indexNull = allResul[i].tabel.IndexOf(numberOfBlocks) + 1;
-        //        indexBlock = indexNull + numberOfBlockInLine;
-        //        if (indexBlock < numberOfBlocks)
-        //        {
-        //            element.parent = allResul[i].tabel;
-        //            element.index = indexBlock;
-        //            element.tabel = MoveBlockInTabel(indexNull, indexBlock, allResul[i].tabel);
-        //            element.countResh = allResul[i].countResh + 1;
-        //                if (Realy(element, allResul))
-        //                    allResul.Add(element);
-        //        }
-        //        indexBlock = indexNull - numberOfBlockInLine;
-        //        if (indexBlock > 0)
-        //        {
-        //            element.parent = allResul[i].tabel;
-        //            element.index = indexBlock;
-        //            element.tabel = MoveBlockInTabel(indexNull, indexBlock, allResul[i].tabel);
-        //            element.countResh = allResul[i].countResh + 1;
-        //                if (Realy(element, allResul))
-        //                    allResul.Add(element);
-        //        }
-        //        if (indexNull % numberOfBlockInLine != 0)
-        //        {
-        //            indexBlock = indexNull + 1;
-        //            element.parent = allResul[i].tabel;
-        //            element.index = indexBlock;
-        //            element.tabel = MoveBlockInTabel(indexNull, indexBlock, allResul[i].tabel);
-        //            element.countResh = allResul[i].countResh + 1;
-        //                if (Realy(element, allResul))
-        //                    allResul.Add(element);
-        //        }
-        //        if (indexNull % numberOfBlockInLine != 1)
-        //        {
-        //            indexBlock = indexNull - 1;
-        //            element.parent = allResul[i].tabel;
-        //            element.index = indexBlock;
-        //            element.tabel = MoveBlockInTabel(indexNull, indexBlock, allResul[i].tabel);
-        //            element.countResh = allResul[i].countResh + 1;
-        //                if (Realy(element, allResul))
-        //                    allResul.Add(element);
-        //        }
-        //    }
-
-        //}
-        private List<Tree> GenerateTree(Tree tree)
+        private List<GamePosition> GenerateNeighbords(GamePosition tree)
         {
             allResul.Clear();
             indexNull = tree.tabel.IndexOf(numberOfBlocks) + 1;
             indexBlock = indexNull + numberOfBlockInLine;
-            element.parent = new List<Tree>() { tree };
-            //element.countResh = tree.countResh + 1;
+            element.parent = new List<GamePosition>() { tree };
             if (indexBlock <= numberOfBlocks)
             {
                 element.index = indexBlock;
@@ -143,80 +85,73 @@ namespace Игра_в_15
                     return false;
             return true;
         }
-        private bool Realy(Tree first, Dictionary<List<int>, int> cost)
-        {
-            foreach (var item in cost)
-            {
-                if (item.Key.SequenceEqual(first.tabel))
-                    return false;
-            }
-            return true;
-        }
 
         public List<int> AStar()
         {
-            Tree root;
-            root.parent = new List<Tree>();
-            root.index = -1;
-            root.tabel = TabelGame;
-            //root.countResh = 0;
-            PriorityQueue<Tree, int> priorityQueue = new PriorityQueue<Tree, int>();
+            long after = 0;
+            long before = GC.GetTotalMemory(true); //для тестирования
+            GamePosition root = new GamePosition(TabelGame, new List<GamePosition>(), -1);
+            PriorityQueue<GamePosition, int> priorityQueue = new PriorityQueue<GamePosition, int>();
             priorityQueue.Enqueue(root, 0);
-            Tree current = root;
-            List<Tree> neighbords = new List<Tree>();
-            Dictionary<List<int>, int> cost = new Dictionary<List<int>, int>();
-            cost[root.tabel] = 0;
-            int newCost;
+            GamePosition current = root;
+            List<GamePosition> neighbors;
+            Dictionary<List<int>, int> cost = new Dictionary<List<int>, int>(new ListComparer())
+            {
+                [root.tabel] = 0
+            };
+            int g;
             int prior;
-            //tabeGame = new List<int>(numberOfBlocks);
             while (!priorityQueue.Empty())
             {
-                neighbords.Clear();
                 current = priorityQueue.Dequeue();
                 if (IsGameOver(current.tabel))
+                {
+                    after = GC.GetTotalMemory(true); // для тестирования
                     priorityQueue.Clear();
+                }
                 else
                 {
-                    cost[current.tabel] = FuncForFindShortestWay(current);
-                    neighbords = GenerateTree(current);
-                    foreach (var next in neighbords)
+                    neighbors = GenerateNeighbords(current);
+                    foreach (var neighbor in neighbors)
                     {
-                        newCost = FuncForFindShortestWay(next);
-                        if (Realy(next, cost))// || (newCost < cost[next.tabel]))
+                        g = cost[current.tabel];
+                        if (!cost.ContainsKey(neighbor.tabel) || (g < cost[neighbor.tabel]))
                         {
-                            cost[next.tabel] = newCost;
-                            prior = newCost; //+ LastMove(next);
-                            priorityQueue.Enqueue(next, prior);
+                            cost[neighbor.tabel] = g;
+                            prior = g + H(neighbor);
+                            priorityQueue.Enqueue(neighbor, prior);
                         }
                     }
                 }
             }
 
             List<int> resultIndex = new List<int>();
-            Tree f = current;
+            GamePosition f = current;
             while (f.parent.Count != 0)
             {
                 resultIndex.Add(f.index);
                 f = f.parent[0];
             }
-            //resultIndex.Reverse();
-            Console.WriteLine("We did it? ");
+            Test.len = cost.Count();
+            Test.memory = (after - before) / (1024 * 1024);
+            cost.Clear();
+            resultIndex.Reverse();
             return resultIndex;
         }
-        private int FuncForFindShortestWay(Tree f)
+        private int H(GamePosition f)
         {
-            return ManhDist(f) + CountBlocksIsOutOfPlace(f.tabel);
+            return ManhDist(f) + CountBlocksIsOutOfPlace(f) + LastMove(f); //+ CornerTitels(f);
         }
 
-        private int CountBlocksIsOutOfPlace(List<int> tabel)
+        private int CountBlocksIsOutOfPlace(GamePosition f)
         {
             count = 0;
-            for (int i = 0; i < tabel.Count; i++)
-                if (tabel[i] != i + 1)
+            for (int i = 0; i < f.tabel.Count; i++)
+                if (f.tabel[i] != i + 1)
                     count++;
             return count;
         }
-        private int ManhDist(Tree f)
+        private int ManhDist(GamePosition f)
         {
             int dist = 0;
             for (int i = 0; i < numberOfBlocks; i++)
@@ -225,39 +160,32 @@ namespace Игра_в_15
             }
             return dist;
         }
-        private int ManhDistMatrix(int a, int b)
+        private int ManhDistMatrix(int first, int second)
         {
-            //if (a == 15)
-            //    return Math.Abs(0 % numberOfBlockInLine - b % numberOfBlockInLine) + Math.Abs(0 / numberOfBlockInLine - b / numberOfBlockInLine);
-            return Math.Abs(a % numberOfBlockInLine - b % numberOfBlockInLine) + Math.Abs(a / numberOfBlockInLine - b / numberOfBlockInLine);
+            return Math.Abs(first % numberOfBlockInLine - second % numberOfBlockInLine) + Math.Abs(first / numberOfBlockInLine - second / numberOfBlockInLine);
         }
-        private int LastMove(Tree f)
+        private int LastMove(GamePosition f)
         {
             if (f.tabel[numberOfBlocks - 1] == numberOfBlocks - 1 || f.tabel[numberOfBlocks - 1] == numberOfBlocks - numberOfBlockInLine)
                 return 0;
             return 2;
         }
-        //public List<int> AStar()
-        //{
-        //    Tree root;
-        //    root.index = -1;
-        //    root.tabel = TabelGame;
-        //    root.his = new List<int>();
-        //    PriorityQueue<Tree, int> priority = new PriorityQueue<Tree, int>();
-        //    priority.Enqueue(root, 0);
-        //    Tree current = root;
-        //    while (!priority.Empty())
-        //    {
-        //        current = priority.Dequeue();
-        //        if (IsGameOver(current.tabel))
-        //            priority.Clear();
-        //        else
-        //        {
-
-        //        }
-        //    }
-        //    return current.his;
-
-        //}
+        private int CornerTitels(GamePosition f)
+        {
+            int count = 0;
+            if ((f.tabel[2] == 3 || f.tabel[7] == 8) && f.tabel[3] != 4)
+                count += 2;
+            if (f.tabel[7] == 8 && f.tabel[3] != 4)
+                count += 2;
+            if ((f.tabel[1] == 2 || f.tabel[5] == 6) && f.tabel[0] != 1)
+                count += 2;
+            if (f.tabel[5] == 6 && f.tabel[0] != 1)
+                count += 2;
+            if ((f.tabel[8] == 9 || f.tabel[13] == 14) && f.tabel[12] != 13)
+                count += 2;
+            if (f.tabel[13] == 14 && f.tabel[12] != 13)
+                count += 2;
+            return count;
+        }
     }
 }

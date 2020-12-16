@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 
 namespace Игра_в_15
 {
     class PriorityQueue<TItem, TPriority> where TPriority : IComparable
     {
-        private SortedList<TPriority, Queue<TItem>> pq = new SortedList<TPriority, Queue<TItem>>();//Comparer<TPriority>.Create((x, y) => y.CompareTo(x)));
+        private SortedList<TPriority, Queue<TItem>> pq = new SortedList<TPriority, Queue<TItem>>();
         public int Count { get; private set; }
 
         public void Enqueue(TItem item, TPriority priority)
         {
             ++Count;
             if (!pq.ContainsKey(priority)) pq[priority] = new Queue<TItem>();
-            if (!pq[priority].Contains(item))
-                pq[priority].Enqueue(item);
+            pq[priority].Enqueue(item);
         }
 
         public TItem Dequeue()
