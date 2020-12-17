@@ -114,7 +114,7 @@ namespace Игра_в_15
                     neighbors = GenerateNeighbords(current);
                     foreach (var neighbor in neighbors)
                     {
-                        g = cost[current.tabel];
+                        g = cost[current.tabel] + 1;
                         if (!cost.ContainsKey(neighbor.tabel) || (g < cost[neighbor.tabel]))
                         {
                             cost[neighbor.tabel] = g;
