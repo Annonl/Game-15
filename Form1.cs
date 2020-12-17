@@ -97,7 +97,7 @@ namespace Игра_в_15
             if (IsGameOver())
             {
                 timer1.Stop();
-                if (MessageBox.Show("Поздравляю, вы выйграли. Хотите продолжить ?" + countSteps, "Поздравляю", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Поздравляю, вы выйграли. Количество ходов: " + countSteps + " Хотите продолжить ? ", "Поздравляю", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     GenerateTabel();
                     ImageTabel();
