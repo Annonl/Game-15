@@ -27,7 +27,7 @@ namespace Игра_в_15
                     string str = reader.ReadLine();
                     List<int> lst = new List<int>(str.Split(' ').Select(int.Parse));
                     tabelGame = lst;
-                    Algoritm.TabelGame = tabelGame;
+                    algoritm.TabelGame = tabelGame;
                     stopwatch.Start();
                     resh = algoritm.AStar();
                     stopwatch.Stop();

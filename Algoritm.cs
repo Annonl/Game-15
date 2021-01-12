@@ -28,7 +28,9 @@ namespace Игра_в_15
         int[] tabeGame = new int[numberOfBlocks];
         int temp;
         int count = 0;
-        static public List<int> TabelGame { get; set; }
+        public List<int> TabelGame { get; set; }
+
+        public int ChooseAlgoritm { get; set; } // выбранный вид алгоритма 1 - алгоритм A*, 0 - Жадный алгоритм
 
         private List<GamePosition> GenerateNeighbords(GamePosition tree)
         {
@@ -114,7 +116,7 @@ namespace Игра_в_15
                     neighbors = GenerateNeighbords(current);
                     foreach (var neighbor in neighbors)
                     {
-                        g = cost[current.tabel] + 1;
+                        g = cost[current.tabel] + ChooseAlgoritm;
                         if (!cost.ContainsKey(neighbor.tabel) || (g < cost[neighbor.tabel]))
                         {
                             cost[neighbor.tabel] = g;

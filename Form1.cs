@@ -23,6 +23,7 @@ namespace Игра_в_15
 
         List<int> resh = new List<int>();
         int id;
+        int algFind = 1; //переменная, отвечающая за выбор алгоритма поиска 1 - A* , 0 - жадный
 
         List<int> tabelGame = new List<int>(NUMBEROFBLOCKS);
         public MainForm()
@@ -30,6 +31,7 @@ namespace Игра_в_15
             InitializeComponent();
             GenerateTabel();
             ImageTabel();
+
         }
 
         private void GenerateTabel() // Генерирует игровое поле
@@ -97,15 +99,24 @@ namespace Игра_в_15
             if (IsGameOver())
             {
                 timer1.Stop();
-                if (MessageBox.Show("Поздравляю, вы выйграли. Количество ходов: " + countSteps + " Хотите продолжить ? ", "Поздравляю", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Поздравляю, вы выйграли. \nКоличество ходов: " + countSteps + " \nХотите продолжить? ", "Поздравляю", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    tableLayoutPanel.Enabled = true;
                     GenerateTabel();
                     ImageTabel();
                     countSteps = 0;
+                    ShowAlg();
+
                 }
                 else
                     Close();
             }
+        }
+
+        private void ShowAlg()
+        {
+            ToolStripMenuItemAlgA.Enabled = true;
+            ToolStripMenuItemAlgG.Enabled = true;
         }
 
         private bool IsGameOver()
@@ -134,11 +145,11 @@ namespace Игра_в_15
         {
             if (e.KeyCode == Keys.Enter && !timer1.Enabled)
             {
-                Algoritm algoritm = new Algoritm();
-                Algoritm.TabelGame = tabelGame;
-                resh = algoritm.AStar();
-                id = 0;
-                timer1.Enabled = true;
+                ShowInfoTabel();
+                HideAlghoritm();
+                StartAlghoritm();
+
+
             }
             if (e.KeyCode == Keys.Tab)
             {
@@ -146,12 +157,93 @@ namespace Игра_в_15
             }
         }
 
+        private void HideAlghoritm()
+        {
+            ToolStripMenuItemAlgA.Enabled = false;
+            ToolStripMenuItemAlgG.Enabled = false;
+        }
+
+        private void ShowInfoTabel()
+        {
+            if (algFind == 1)
+                MessageBox.Show("Алгоритм A* может находить решение игры в 15 долгое время.\n Пожалуйста, дождитесь конца работы алгоритма.", "Предупреждение");
+            tableLayoutPanel.Enabled = false;
+        }
+
+        private void StartAlghoritm()
+        {
+            Algoritm algoritm = new Algoritm();
+            algoritm.TabelGame = tabelGame;
+            algoritm.ChooseAlgoritm = algFind;
+            resh = algoritm.AStar();
+            id = 0;
+            timer1.Enabled = true;
+        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             PictureBox picture = (PictureBox)Controls.Find("picture" + resh[id++], true)[0];
             MouseEventArgs e1 = new MouseEventArgs(MouseButtons.Left, 1, 1, 1, 1);
             picture1_MouseClick(picture, e1);
+        }
+
+        private void ToolStripMenuItemMiddle_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 200;
+            ToolStripMenuIteSlow.Checked = false;
+            ToolStripMenuItemMiddle.Checked = true;
+            ToolStripMenuItemFast.Checked = false;
+            ToolStripMenuItemMomentum.Checked = false;
+        }
+
+        private void ToolStripMenuIteSlow_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 400;
+            ToolStripMenuIteSlow.Checked = true;
+            ToolStripMenuItemMiddle.Checked = false;
+            ToolStripMenuItemFast.Checked = false;
+            ToolStripMenuItemMomentum.Checked = false;
+        }
+
+        private void ToolStripMenuItemFast_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 100;
+            ToolStripMenuIteSlow.Checked = false;
+            ToolStripMenuItemMiddle.Checked = false;
+            ToolStripMenuItemFast.Checked = true;
+            ToolStripMenuItemMomentum.Checked = false;
+        }
+
+        private void ToolStripMenuItemMomentum_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = 50;
+            ToolStripMenuIteSlow.Checked = false;
+            ToolStripMenuItemMiddle.Checked = false;
+            ToolStripMenuItemFast.Checked = false;
+            ToolStripMenuItemMomentum.Checked = true;
+        }
+
+        private void ToolStripMenuItemAlgA_Click(object sender, EventArgs e)
+        {
+            algFind = 1;
+            ToolStripMenuItemAlgA.Checked = true;
+            ToolStripMenuItemAlgG.Checked = false;
+        }
+
+        private void ToolStripMenuItemAlgG_Click(object sender, EventArgs e)
+        {
+            algFind = 0;
+            ToolStripMenuItemAlgA.Checked = false;
+            ToolStripMenuItemAlgG.Checked = true;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Игра в 15.\n" +
+                "Приложение предназначено для отоброжения выполнения алгоритма A* и жадного алгоритма.\n" +
+                "Для начала работы выбранного алгоритма следует нажать Enter.\n" +
+                "Так же программа имеет возможность ручного решения игры в 15.\n" +
+                "Колпащиков Алексей. Студент ФИб-2301 Вятгу.", "Справка");
         }
     }
 }
